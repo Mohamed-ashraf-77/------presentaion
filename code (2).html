@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fluent Academy — Business Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0f1a;
+      --surface: #151829;
+      --surface-2: #1c2038;
+      --accent: #f5a623;
+      --accent-light: #ffd07a;
+      --accent-dim: #c4841a;
+      --blue: #4a9eff;
+      --green: #34d399;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --text-primary: #f0ece4;
+      --text-muted: #8a8698;
+      --text-dim: #5a5670;
+      --border: #2a2d42;
+      --gradient-hero: linear-gradient(160deg, #0c0f1a 0%, #1a1040 40%, #0c0f1a 100%);
+      --gradient-accent: linear-gradient(135deg, #f5a623 0%, #ffd07a 100%);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      direction: rtl;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ─── Slide ─── */
+    .slide {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 60px 80px;
+    }
+
+    .slide-inner {
+      max-width: 1200px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .slide-number {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+
+    /* ─── Backgrounds ─── */
+    .slide--hero {
+      background: var(--gradient-hero);
+    }
+    .slide--hero::after {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 70%);
+      z-index: 1;
+    }
+
+    .slide--dark { background: var(--bg); }
+
+    .slide--surface {
+      background: radial-gradient(ellipse at 30% 20%, var(--surface-2) 0%, var(--bg) 70%);
+    }
+
+    .slide--accent-bg {
+      background: radial-gradient(ellipse at 70% 50%, rgba(245, 166, 35, 0.04) 0%, var(--bg) 60%);
+    }
+
+    .slide--problem {
+      background: radial-gradient(ellipse at 40% 60%, rgba(248, 113, 113, 0.04) 0%, var(--bg) 60%);
+    }
+
+    /* ─── Typography ─── */
+    h1 {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+
+    h1 .accent { color: var(--accent); }
+
+    h2 {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--text-primary);
+      margin-bottom: 28px;
+      line-height: 1.3;
+    }
+
+    h2 .accent { color: var(--accent); }
+
+    h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: var(--text-muted);
+      max-width: 720px;
+    }
+
+    p.lead {
+      font-size: 1.35rem;
+      line-height: 2;
+      color: var(--text-muted);
+    }
+
+    .accent-line {
+      width: 56px;
+      height: 3px;
+      background: var(--gradient-accent);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .accent-line--center { margin-inline: auto; }
+
+    /* ─── Problem Cards ─── */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .pain-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .pain-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      background: var(--red);
+      opacity: 0.6;
+    }
+
+    .pain-card:nth-child(1) { animation-delay: 0.1s; }
+    .pain-card:nth-child(2) { animation-delay: 0.25s; }
+    .pain-card:nth-child(3) { animation-delay: 0.4s; }
+
+    .pain-icon {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .pain-card h3 {
+      color: var(--red);
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .pain-card p {
+      font-size: 0.95rem;
+      margin-inline: auto;
+      text-align: center;
+    }
+
+    .pain-stat {
+      font-family: 'DM Mono', monospace;
+      font-size: 2rem;
+      color: var(--red);
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .pain-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* ─── Solution Cards ─── */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .solution-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .solution-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-3px);
+    }
+
+    .solution-card:nth-child(1) { animation-delay: 0.1s; }
+    .solution-card:nth-child(2) { animation-delay: 0.2s; }
+    .solution-card:nth-child(3) { animation-delay: 0.3s; }
+    .solution-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .solution-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(245, 166, 35, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .solution-text h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .solution-text p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ─── Feature Showcase ─── */
+    .showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .showcase-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+    }
+
+    .showcase-mock {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mock-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .mock-dot--red { background: var(--red); }
+    .mock-dot--yellow { background: var(--accent); }
+    .mock-dot--green { background: var(--green); }
+
+    .mock-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(42, 45, 66, 0.5);
+    }
+
+    .mock-row:last-child { border-bottom: none; }
+
+    .mock-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .mock-icon-box--accent { background: rgba(245, 166, 35, 0.1); }
+    .mock-icon-box--blue { background: rgba(74, 158, 255, 0.1); }
+    .mock-icon-box--green { background: rgba(52, 211, 153, 0.1); }
+    .mock-icon-box--purple { background: rgba(167, 139, 250, 0.1); }
+
+    .mock-label {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .mock-sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .mock-badge {
+      margin-inline-start: auto;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .mock-badge--done {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--green);
+    }
+
+    .mock-badge--pending {
+      background: rgba(245, 166, 35, 0.15);
+      color: var(--accent);
+    }
+
+    .mock-badge--new {
+      background: rgba(74, 158, 255, 0.15);
+      color: var(--blue);
+    }
+
+    .showcase-content h3 {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .showcase-content p {
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .check-list {
+      list-style: none;
+    }
+
+    .check-list li {
+      padding: 10px 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .check-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(52, 211, 153, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ─── Stats ─── */
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .impact-card {
+      text-align: center;
+      padding: 36px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .impact-card:nth-child(1) { animation-delay: 0.1s; }
+    .impact-card:nth-child(2) { animation-delay: 0.2s; }
+    .impact-card:nth-child(3) { animation-delay: 0.3s; }
+    .impact-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .impact-number {
+      font-family: 'DM Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .impact-label {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── Comparison ─── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 32px;
+    }
+
+    .compare-table th {
+      background: var(--surface-2);
+      padding: 18px 24px;
+      text-align: center;
+      border-bottom: 2px solid var(--border);
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .compare-table th:first-child {
+      text-align: right;
+      color: var(--accent);
+    }
+
+    .compare-table td {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .compare-table td:first-child {
+      text-align: right;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .compare-table tr:hover td {
+      background: rgba(245, 166, 35, 0.02);
+    }
+
+    .icon-yes {
+      color: var(--green);
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .icon-no {
+      color: var(--red);
+      font-size: 1.2rem;
+      opacity: 0.5;
+    }
+
+    .icon-partial {
+      color: var(--accent);
+      font-size: 0.85rem;
+    }
+
+    .compare-table .col-fluent {
+      background: rgba(245, 166, 35, 0.03);
+    }
+
+    /* ─── User Journey ─── */
+    .journey {
+      display: flex;
+      gap: 20px;
+      margin-top: 40px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+    }
+
+    .journey-step {
+      flex: 1;
+      min-width: 200px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .journey-step:nth-child(1) { animation-delay: 0.05s; }
+    .journey-step:nth-child(2) { animation-delay: 0.12s; }
+    .journey-step:nth-child(3) { animation-delay: 0.19s; }
+    .journey-step:nth-child(4) { animation-delay: 0.26s; }
+    .journey-step:nth-child(5) { animation-delay: 0.33s; }
+
+    .journey-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(245, 166, 35, 0.1);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin: 0 auto 16px;
+    }
+
+    .journey-step h3 {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .journey-step p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-align: center;
+      margin-inline: auto;
+    }
+
+    /* ─── Benefits ─── */
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .benefit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .benefit-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-4px);
+    }
+
+    .benefit-card:nth-child(1) { animation-delay: 0.08s; }
+    .benefit-card:nth-child(2) { animation-delay: 0.16s; }
+    .benefit-card:nth-child(3) { animation-delay: 0.24s; }
+    .benefit-card:nth-child(4) { animation-delay: 0.32s; }
+    .benefit-card:nth-child(5) { animation-delay: 0.40s; }
+    .benefit-card:nth-child(6) { animation-delay: 0.48s; }
+
+    .benefit-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .benefit-card h3 {
+      color: var(--text-primary);
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    .benefit-card p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    /* ─── CTA ─── */
+    .cta-box {
+      background: var(--surface);
+      border: 2px solid var(--accent-dim);
+      border-radius: 20px;
+      padding: 48px;
+      text-align: center;
+      max-width: 700px;
+      margin: 40px auto 0;
+    }
+
+    .cta-box h3 {
+      font-size: 1.6rem;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .cta-box p {
+      margin-inline: auto;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .cta-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .cta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .cta-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(245, 166, 35, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.3); }
+      50% { box-shadow: 0 0 0 12px rgba(245, 166, 35, 0); }
+    }
+
+    /* ─── Slide Counter ─── */
+    .slide-counter {
+      position: fixed;
+      bottom: 40px;
+      left: 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: var(--text-dim);
+      z-index: 100;
+    }
+
+    /* ─── Two Col ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .slide { padding: 40px 32px; }
+      .pain-grid, .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+      .impact-grid { grid-template-columns: repeat(2, 1fr); }
+      .solution-grid { grid-template-columns: 1fr; }
+      .showcase { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; gap: 24px; }
+      .journey { flex-wrap: nowrap; }
+    }
+
+    @media (max-width: 640px) {
+      .slide { padding: 32px 20px; }
+      .pain-grid, .benefit-grid, .impact-grid { grid-template-columns: 1fr; }
+      .journey { flex-direction: column; }
+      .compare-table { font-size: 0.8rem; }
+      .compare-table td, .compare-table th { padding: 10px 8px; }
+    }
+
+    @media print {
+      .slide { page-break-after: always; min-height: 100vh; }
+      .slide-counter { display: none; }
+      body::before { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 01 — Cover -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--hero" id="slide-1">
+  <span class="slide-number">01 / 12</span>
+  <div class="slide-inner" style="text-align: center;">
+    <div style="margin-bottom: 28px;">
+      <span style="font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase;">
+        Smart English Learning Platform
+      </span>
+    </div>
+    <h1 style="font-size: clamp(3.2rem, 6.5vw, 6rem); margin-bottom: 20px;">
+      <span class="accent">Fluent</span> Academy
+    </h1>
+    <div class="accent-line accent-line--center" style="width: 80px; margin-bottom: 28px;"></div>
+    <p class="lead" style="max-width: 640px; margin-inline: auto; text-align: center;">
+      منصة تعليم إنجليزي ذكية تُعيد تعريف cách الطلاب يتعلمون.<br />
+      تفاعل يومي. تغذية راجعة فورية. نتائج حقيقية.
+    </p>
+    <div style="margin-top: 56px; display: flex; justify-content: center; gap: 40px;">
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 2.2rem; color: var(--accent); font-weight: 500;">10+</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim);">أنواع أنشطة تفاعلية</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 2.2rem; color: var(--accent); font-weight: 500;">2</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim);">أدوار متكاملة</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 2.2rem; color: var(--accent); font-weight: 500;">1</div>
+        <div style="font-size: 0.85rem; color: var(--text-dim);">منصة موحدة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 02 — The Problem -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--problem" id="slide-2">
+  <span class="slide-number">02 / 12</span>
+  <div class="slide-inner">
+    <div class="accent-line"></div>
+    <h2>المشكلة الحقيقية</h2>
+    <p style="margin-bottom: 12px;">
+      شركات تعليم الإنجليزي تواجه تحديات يومية تُكلفها وقتاً وجهداً وتفقد طلابها.
+    </p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <span class="pain-icon">😤</span>
+        <span class="pain-stat">73%</span>
+        <span class="pain-stat-label">من المعلمين يقضون وقتاً في متابعة الواجبات يدوياً</span>
+        <h3>فوضى الواجبات</h3>
+        <p>واجبات على واتساب، تسجيلات على جوجل درايف، درجات على إكسيل. كل شيء مبعثر.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">📉</span>
+        <span class="pain-stat">60%</span>
+        <span class="pain-stat-label">من الطلاب ي_dropout لأن لا أحد يتابع تقدمهم</span>
+        <h3>غياب المتابعة</h3>
+        <p>الطالب يدرس بدون خطة واضحة. لا يعرف مستوى تقدمه. لا يتلقى تغذية راجعة مستمرة.</p>
+      </div>
+      <div class="pain-card">
+        <span class="pain-icon">⏰</span>
+        <span class="pain-stat">40%</span>
+        <span class="pain-stat-label">من وقت المعلم يُضيع في إدارة بدل التدريس</span>
+        <h3>عبء إداري</h3>
+        <p>المعلم ينسق بين أدوات متعددة. يجمع الواجبات، يصحح، يُرسل النتائج. كل يوم.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 03 — The Solution -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--accent-bg" id="slide-3">
+  <span class="slide-number">03 / 12</span>
+  <div class="slide-inner">
+    <div class="accent-line"></div>
+    <h2>الحل — <span class="accent">Fluent Academy</span></h2>
+    <p style="margin-bottom: 12px;">
+      منصة واحدة تجمع كل شيء. المعلم يُنشئ. الطالب يتفاعل. المنصة تتابع.
+    </p>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="solution-icon">📅</div>
+        <div class="solution-text">
+          <h3>أيام تدريبية منظمة</h3>
+          <p>كل يوم تدريبي يحتوي على أنشطة متنوعة مُصممة بعناية. الطالب يعرف بالضبط ماذا يفعل.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">🎯</div>
+        <div class="solution-text">
+          <h3>10 أنواع أنشطة</h3>
+          <p>مفردات، قواعد، PDF، صور، فيديو، shadowing، تسجيل صوتي، واجب، نصائح، روابط خارجية.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">🎙️</div>
+        <div class="solution-text">
+          <h3>ممارسة صوتية مع تغذية راجعة</h3>
+          <p>الطالب يسجل. المعلم يراجع ويُحدد الأخطاء (نطق، قواعد، مفردات، طلاقة). الطالب يعرف بالضبط أين يُحسّن.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">📊</div>
+        <div class="solution-text">
+          <h3>متابعة تلقائية</h3>
+          <p>نسبة الإكمال، إحصائيات الأنشطة، تقدم المفردات، تحسين Speaking — كل شيء محسوب تلقائياً.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 04 — How It Works -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--dark" id="slide-4">
+  <span class="slide-number">04 / 12</span>
+  <div class="slide-inner" style="text-align: center;">
+    <div class="accent-line accent-line--center"></div>
+    <h2>كيف تعمل المنصة؟</h2>
+    <p style="margin-inline: auto; text-align: center; margin-bottom: 12px;">
+      رحلة بسيطة من 5 خطوات لكل يوم تدريبي.
+    </p>
+    <div class="journey">
+      <div class="journey-step">
+        <div class="journey-num">1</div>
+        <h3>المعلم يُنشئ</h3>
+        <p>يوم تدريبي جديد مع أنشطة متنوعة ومصادر تعليمية</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">2</div>
+        <h3>الطالب يتفاعل</h3>
+        <p>يكمل الأنشطة، يُرسل تسجيلات صوتية، يقدم الواجبات</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">3</div>
+        <h3>المعلم يراجع</h3>
+        <p>يسمع التسجيلات، يصحح الواجبات، يُحدد الأخطاء</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">4</div>
+        <h3>الطالب يتعلم</h3>
+        <p>يتلقى تغذية راجعة تفصيلية ويعرف بالضبط أين يُحسّن</p>
+      </div>
+      <div class="journey-step">
+        <div class="journey-num">5</div>
+        <h3>المنصة تتابع</h3>
+        <p>تحسب التقدم، تُظهر الإحصائيات، تُحفّز الاستمرار</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 05 — Feature Deep Dive: Practice Day -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--surface" id="slide-5">
+  <span class="slide-number">05 / 12</span>
+  <div class="slide-inner">
+    <div class="showcase">
+      <div class="showcase-visual">
+        <div class="showcase-mock">
+          <div class="mock-header">
+            <div class="mock-dot mock-dot--red"></div>
+            <div class="mock-dot mock-dot--yellow"></div>
+            <div class="mock-dot mock-dot--green"></div>
+            <span style="margin-inline-start: auto; font-size: 0.75rem; color: var(--text-dim); font-family: 'DM Mono', monospace;">Day 5 — Daily Practice</span>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box mock-icon-box--accent">📖</div>
+            <div>
+              <div class="mock-label">Vocabulary — New Words</div>
+              <div class="mock-sub">15 words with examples</div>
+            </div>
+            <span class="mock-badge mock-badge--done">مكتمل</span>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box mock-icon-box--blue">📝</div>
+            <div>
+              <div class="mock-label">Grammar — Past Tense</div>
+              <div class="mock-sub">Exercise + quiz</div>
+            </div>
+            <span class="mock-badge mock-badge--done">مكتمل</span>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box mock-icon-box--green">🎙️</div>
+            <div>
+              <div class="mock-label">Voice — Describe your day</div>
+              <div class="mock-sub">Record & submit</div>
+            </div>
+            <span class="mock-badge mock-badge--pending">قيد المراجعة</span>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box mock-icon-box--purple">📄</div>
+            <div>
+              <div class="mock-label">PDF — Reading Passage</div>
+              <div class="mock-sub">Read & answer questions</div>
+            </div>
+            <span class="mock-badge mock-badge--new">جديد</span>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <h3>اليوم التدريبي</h3>
+        <p>
+          كل يوم تدريبي هو وحدة تعليمية متكاملة. المعلم يُصممها بنشاطات متنوعة تغطي جميع جوانب اللغة.
+        </p>
+        <ul class="check-list">
+          <li>
+            <span class="check-icon">✓</span>
+            أنشطة متنوعة: مفردات، قواعد، استماع، محادثة، قراءة، كتابة
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            مواعيد نهائية إرشادية (لا تمنع المشاركة)
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            حد أدنى اختياري للأنشطة المطلوبة
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            ترتيب تلقائي — لا حاجة للتنسيق اليدوي
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            إعلانات المعلم تظهر مباشرة للطلاب
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 06 — Feature Deep Dive: Voice + Feedback -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--accent-bg" id="slide-6">
+  <span class="slide-number">06 / 12</span>
+  <div class="slide-inner">
+    <div class="showcase" style="direction: ltr;">
+      <div class="showcase-content" style="direction: rtl;">
+        <h3>ال Speaking مع تغذية راجعة تفصيلية</h3>
+        <p>
+          الطالب يُسجل بصوته. المعلم يسمع ويُحدد كل خطأ مع التصنيف والتصحيح.
+        </p>
+        <ul class="check-list">
+          <li>
+            <span class="check-icon">✓</span>
+            الطالب يُرسل من Google Drive, YouTube, أو Terabox
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            تسجيل واحد يومياً يُحفّز الاستمرارية
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            المعلم يُحدد: قواعد، نطق، مفردات، طلاقة
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            كل خطأ: النص الأصلي + التصحيح + الشرح
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            تقارير Speaking تُتبع التقدم عبر الزمن
+          </li>
+        </ul>
+      </div>
+      <div class="showcase-visual">
+        <div class="showcase-mock">
+          <div class="mock-header">
+            <div class="mock-dot mock-dot--red"></div>
+            <div class="mock-dot mock-dot--yellow"></div>
+            <div class="mock-dot mock-dot--green"></div>
+            <span style="margin-inline-start: auto; font-size: 0.75rem; color: var(--text-dim); font-family: 'DM Mono', monospace;">Speaking Report</span>
+          </div>
+          <div style="padding: 12px 0; border-bottom: 1px solid var(--border); margin-bottom: 12px;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Student: Ahmed — Day 5</div>
+            <div style="font-size: 0.8rem; color: var(--text-dim);">Summary: Good progress. Focus on pronunciation.</div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box" style="background: rgba(248, 113, 113, 0.1);">🔴</div>
+            <div>
+              <div class="mock-label" style="color: var(--red);">Pronunciation</div>
+              <div class="mock-sub">"comfortable" → pronounced as "comf-ter-ble"</div>
+            </div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box" style="background: rgba(245, 166, 35, 0.1);">🟡</div>
+            <div>
+              <div class="mock-label" style="color: var(--accent);">Grammar</div>
+              <div class="mock-sub">"I goed" → "I went" (Past tense)</div>
+            </div>
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon-box" style="background: rgba(74, 158, 255, 0.1);">🔵</div>
+            <div>
+              <div class="mock-label" style="color: var(--blue);">Vocabulary</div>
+              <div class="mock-sub">"big" → try "enormous" or "massive"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 07 — Dictionary & Homework -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--dark" id="slide-7">
+  <span class="slide-number">07 / 12</span>
+  <div class="slide-inner">
+    <div class="accent-line"></div>
+    <h2>أدوات إضافية تُعزز التعلم</h2>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="solution-icon">📖</div>
+        <div class="solution-text">
+          <h3>دفتر المفردات الشخصي</h3>
+          <p>كل طالب يبني قاموسه الخاص. يُضيف الكلمة، التعريف، مثال. المعلم يُضيف ملاحظاته على كل كلمة.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">📝</div>
+        <div class="solution-text">
+          <h3>نظام الواجبات</h3>
+          <p>واجب واحد لكل نشاط. الطالب يُرسل ويُعدّل قبل المراجعة. المعلم يُرسل feedback تفصيلي.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">📒</div>
+        <div class="solution-text">
+          <h3>ملاحظات الطالب</h3>
+          <p>داخل كل يوم تدريبي. الطالب يُسجّل ملاحظاته وأفكاره. كل شيء في سياق الدرس.</p>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">📢</div>
+        <div class="solution-text">
+          <h3>نظام الإعلانات</h3>
+          <p>المعلم يُرسل إعلانات تظهر مباشرة لجميع الطلاب. لا حاجة لواتساب أو بريد إلكتروني.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 08 — Comparison -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--surface" id="slide-8">
+  <span class="slide-number">08 / 12</span>
+  <div class="slide-inner">
+    <div class="accent-line"></div>
+    <h2>لماذا <span class="accent">Fluent Academy</span> وليس أدوات أخرى؟</h2>
+    <div style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>الميزة</th>
+            <th>واتساب + جوجل درايف</th>
+            <th>Zoom + إكسيل</th>
+            <th>منصات عامة (Udemy)</th>
+            <th class="col-fluent">Fluent Academy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>تنظيم يومي للتعلم</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-partial">جزئي</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>أنشطة متنوعة (10 أنواع)</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-partial">محدود</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>ممارسة صوتية + مراجعة</td>
+            <td><span class="icon-partial">بدائي</span></td>
+            <td><span class="icon-partial">في البث فقط</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>تغذية راجعة تفصيلية</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-poral">شفهية فقط</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>متابعة تقدم تلقائية</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-partial">يدوية</span></td>
+            <td><span class="icon-yes">✓</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>دفتر مفردات شخصي</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>تقارير Speaking</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>مكان واحد موحد</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-yes">✓</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>مخصص لتعليم الإنجليزي</td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">✗</span></td>
+            <td><span class="icon-no">عام</span></td>
+            <td class="col-fluent"><span class="icon-yes">✓</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 09 — Benefits for Companies -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--accent-bg" id="slide-9">
+  <span class="slide-number">09 / 12</span>
+  <div class="slide-inner" style="text-align: center;">
+    <div class="accent-line accent-line--center"></div>
+    <h2>الفوائد لشركة تعليم الإنجليزي</h2>
+    <p style="margin-inline: auto; text-align: center; margin-bottom: 12px;">
+      ليست مجرد منصة. هي أداة نمو لشركتك.
+    </p>
+    <div class="benefit-grid" style="text-align: right;">
+      <div class="benefit-card">
+        <span class="benefit-icon">💰</span>
+        <h3>زيادة الاحتفاظ بالطلاب</h3>
+        <p>الطالب الذي يتلقى تغذية راجعة يومية لا ي_dropout. الاستمرارية تعني إيرادات مستمرة.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">⏱️</span>
+        <h3>توفير 40% من وقت المعلم</h3>
+        <p>لا جمع واجبات يدوياً. لا تنسيق بين أدوات. المعلم يركز على التدريس فقط.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📊</span>
+        <h3>بيانات حقيقية عن كل طالب</h3>
+        <p>تعرف بالضبط: من يتأخر، من يحتاج مساعدة، أي مهارة ضعيفة. قرارات مبنية على بيانات.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🚀</span>
+        <h3>ميزة تنافسية واضحة</h3>
+        <p>بينما منافسوك يستخدمون واتساب، أنت تعرض منصة متكاملة. هذا يجذب طلاب جدد.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📈</span>
+        <h3>قابلية التوسع</h3>
+        <p>من 10 طلاب إلى 1000. نفس المنصة. نفس الجودة. لا حاجة لمعلمين إضافيين للإدارة.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🎓</span>
+        <h3>سمعة احترافية</h3>
+        <p>brand مميز، تجربة مستخدم ممتازة، نتائج ملموسة. كلمة "منصة تعليم" تعني جدية.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 10 — Impact Numbers -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--dark" id="slide-10">
+  <span class="slide-number">10 / 12</span>
+  <div class="slide-inner" style="text-align: center;">
+    <div class="accent-line accent-line--center"></div>
+    <h2>التأثير المتوقع</h2>
+    <p style="margin-inline: auto; text-align: center; margin-bottom: 12px;">
+      أرقام مبنية على تجربة منصات تعليم مشابهة.
+    </p>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <span class="impact-number">3x</span>
+        <span class="impact-label">زيادة في معدل<br />إكمال الأنشطة</span>
+      </div>
+      <div class="impact-card">
+        <span class="impact-number">40%</span>
+        <span class="impact-label">توفير في وقت<br />المعلم الإداري</span>
+      </div>
+      <div class="impact-card">
+        <span class="impact-number">2x</span>
+        <span class="impact-label">تحسن في Speaking<br />خلال 3 أشهر</span>
+      </div>
+      <div class="impact-card">
+        <span class="impact-number">85%</span>
+        <span class="impact-label">معدل احتفاظ<br />بالطلاب</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 11 — Future Vision -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--surface" id="slide-11">
+  <span class="slide-number">11 / 12</span>
+  <div class="slide-inner">
+    <div class="accent-line"></div>
+    <h2>الرؤية المستقبلية</h2>
+    <p style="margin-bottom: 40px;">
+      المنصة الحالية هي البداية. هناك خارطة طريق واضحة للنمو.
+    </p>
+    <div class="two-col">
+      <div>
+        <h3 style="color: var(--blue); font-size: 1.3rem; margin-bottom: 20px;">القريب (3-6 أشهر)</h3>
+        <ul class="check-list">
+          <li><span class="check-icon">→</span> لوحة إحصائيات متقدمة للمعلم</li>
+          <li><span class="check-icon">→</span> نظام إشعارات بالبريد الإلكتروني</li>
+          <li><span class="check-icon">→</span> تحسينات في تجربة المستخدم</li>
+          <li><span class="check-icon">→</span> نسخة متجاوب للموبايل</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color: var(--purple); font-size: 1.3rem; margin-bottom: 20px;">المتوسط (6-12 شهر)</h3>
+        <ul class="check-list">
+          <li><span class="check-icon">→</span> مراجعة Speaking بالذكاء الاصطناعي (Whisper + GPT)</li>
+          <li><span class="check-icon">→</span> رفع ملفات مباشرة (Cloud Storage)</li>
+          <li><span class="check-icon">→</span> أنواع أنشطة إضافية</li>
+          <li><span class="check-icon">→</span> نظام معلمون متعددون (Marketplace)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top: 40px; text-align: center;">
+      <h3 style="color: var(--green); font-size: 1.3rem; margin-bottom: 20px;">الطويل (12+ شهر)</h3>
+      <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+        <span class="tag" style="background: rgba(52, 211, 153, 0.1); color: var(--green); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem;">تطبيق موبايل</span>
+        <span class="tag" style="background: rgba(74, 158, 255, 0.1); color: var(--blue); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem;">Gamification</span>
+        <span class="tag" style="background: rgba(167, 139, 250, 0.1); color: var(--purple); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem;">Stripe Payments</span>
+        <span class="tag" style="background: rgba(245, 166, 35, 0.1); color: var(--accent); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem;">Live Classes</span>
+        <span class="tag" style="background: rgba(248, 113, 113, 0.1); color: var(--red); padding: 8px 20px; border-radius: 30px; font-size: 0.9rem;">Offline Mode</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDE 12 — CTA -->
+<!-- ════════════════════════════════════════════ -->
+<section class="slide slide--hero" id="slide-12">
+  <span class="slide-number">12 / 12</span>
+  <div class="slide-inner" style="text-align: center;">
+    <h1 style="font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 20px;">
+      جاهز تنقل تعليمك<br />لـ <span class="accent">المستوى التالي</span>؟
+    </h1>
+    <div class="accent-line accent-line--center" style="width: 80px; margin-bottom: 28px;"></div>
+    <p class="lead" style="max-width: 550px; margin-inline: auto; text-align: center; margin-bottom: 48px;">
+      Fluent Academy ليست مجرد منصة.<br />
+      هي شريكك في تقديم تجربة تعليم استثنائية.
+    </p>
+
+    <div class="cta-box">
+      <h3>تواصل معنا</h3>
+      <p style="margin-inline: auto; text-align: center;">
+        نحن جاهزين لعرض المنصة بشكل عملي والإجابة على كل أسئلتكم.
+      </p>
+      <div class="cta-contacts">
+        <div class="cta-item">
+          <div class="cta-icon">📧</div>
+          <span>info@fluentacademy.com</span>
+        </div>
+        <div class="cta-item">
+          <div class="cta-icon">🌐</div>
+          <span>fluentacademy.com</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 64px; display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;">
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 1.8rem; color: var(--accent); font-weight: 500;">10+</div>
+        <div style="font-size: 0.8rem; color: var(--text-dim);">Activity Types</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 1.8rem; color: var(--accent); font-weight: 500;">100%</div>
+        <div style="font-size: 0.8rem; color: var(--text-dim);">Unified Platform</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: 'DM Mono', monospace; font-size: 1.8rem; color: var(--accent); font-weight: 500;">24/7</div>
+        <div style="font-size: 0.8rem; color: var(--text-dim);">Access</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Slide Counter ─── -->
+<div class="slide-counter">
+  <span id="current-slide">01</span> / 12
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('current-slide');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = Array.from(slides).indexOf(entry.target) + 1;
+        counter.textContent = String(index).padStart(2, '0');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach((slide) => observer.observe(slide));
+</script>
+
+</body>
+</html>
